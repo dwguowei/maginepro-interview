@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/maginepro-interview/static/css/main.073c9b0a.css",
-    "main.js": "/maginepro-interview/static/js/main.08e70d09.js",
+    "main.css": "/maginepro-interview/static/css/main.e6c13ad2.css",
+    "main.js": "/maginepro-interview/static/js/main.c6eac5af.js",
     "static/js/787.1f357637.chunk.js": "/maginepro-interview/static/js/787.1f357637.chunk.js",
-    "static/media/logo.svg": "/maginepro-interview/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/maginepro-interview/index.html",
-    "main.073c9b0a.css.map": "/maginepro-interview/static/css/main.073c9b0a.css.map",
-    "main.08e70d09.js.map": "/maginepro-interview/static/js/main.08e70d09.js.map",
+    "main.e6c13ad2.css.map": "/maginepro-interview/static/css/main.e6c13ad2.css.map",
+    "main.c6eac5af.js.map": "/maginepro-interview/static/js/main.c6eac5af.js.map",
     "787.1f357637.chunk.js.map": "/maginepro-interview/static/js/787.1f357637.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.08e70d09.js"
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.c6eac5af.js"
   ]
 }
