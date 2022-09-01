@@ -13,6 +13,15 @@ type CardProps = {
   backgroundImage?: string
 }
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+    }
+`;
+
+
 const Card = styled.div<CardProps>`
   width: 300px;
   height: 444px;
@@ -27,24 +36,37 @@ const Card = styled.div<CardProps>`
   align-items: flex-end;
 `;
 
-const Title = styled.div`
+const TitleWithoutPoster = styled.div`
   padding-bottom: 20px;
+`;
+
+const TitleWithPoster = styled.div`
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-weight: 700;
 `;
 
 function VideoCard ({imdbID, poster, title}: Video) {
   return (
-    <Link to={`detail/${imdbID}`}>
+    <StyledLink to={`detail/${imdbID}`} >
       {poster === "N/A"
         ? (
           <Card backgroundImage={PostPlaceholder}>
-            <Title>{title}</Title>
+            <TitleWithoutPoster>{title}</TitleWithoutPoster>
           </Card>
         )
         : (
-          <Card backgroundImage={poster} />
+          <Card backgroundImage={poster}>
+            <TitleWithPoster>{title}</TitleWithPoster>
+          </Card>
         )
       }
-    </Link>
+    </StyledLink>
   )
 }
 

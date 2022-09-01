@@ -13,9 +13,13 @@ type VideoType = "movie" | "series" | "episode";
 type Search = {imdbID: string, Title: string, Poster: string};
 export type SearchResponse = {Response: string, Search: Search[]};
 export type GetResponse = {
-  Title: string, Year: string, Genre: string, Actors: string, Country: string,
-  Language: string, Plot: string, Poster: string, Released: string, Runtime: string,
-  Season: string, Episode: string, Director: string
+  Actors: string, Awards: string, BoxOffice?: string, Country: string, DVD: string,
+  Director?: string, Genre: string, Language: string, Metascore: string, Plot: string,
+  Poster: string, Production: string, Rated: string, Ratings: {Source: string, Value: string}[],
+  Released: string, Response: string, Runtime: string,
+  Title: string, Type:string, Website: string, Writer: string,
+  Year: string, imdbID: string, imdbRating: string, imdbVotes: string
+  totalSeasons?: string, Season?: string, Episode?: string,
 };
 
 export const searchVideos = (title: string, type: VideoType): Promise<AxiosResponse<SearchResponse>> => {

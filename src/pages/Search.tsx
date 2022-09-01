@@ -40,7 +40,6 @@ function Search () {
   const [title, setTitle] = useState("");
   const [movies, setMovies] = useState<Video[]>([]);
   const [series, setSeries] = useState<Video[]>([]);
-  const [episodes, setEpisodes] = useState<Video[]>([]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,10 +54,6 @@ function Search () {
       setSeries(videos)
     });
 
-    searchVideos(title, "episode").then((result: AxiosResponse<SearchResponse>) => {
-      const videos = readSearchResponse(result.data);
-      setEpisodes(videos)
-    });
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,13 +87,6 @@ function Search () {
           }
         </VideoContainer>
 
-        <CategoryTitle>Episodes</CategoryTitle>
-        <VideoContainer>
-          {episodes && episodes.length > 0
-            ? episodes.map((video) => <VideoCard key={video.imdbID}  imdbID={video.imdbID} poster={video.poster} title={video.title} />)
-            : <div>No Episodes Found</div>
-          }
-        </VideoContainer>
       </SearchResultContainer>
     </>
   )
