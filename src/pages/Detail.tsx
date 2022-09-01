@@ -89,10 +89,12 @@ function Search () {
               <VideoInfoLabel>Actors:</VideoInfoLabel>
               <div>{videoDetail?.Actors}</div>
             </div>
+            {videoDetail?.Released && videoDetail?.Released !== "N/A" && (
             <div>
               <VideoInfoLabel>Released:</VideoInfoLabel>
               <div>{videoDetail?.Released}</div>
             </div>
+            )}
             <div>
               <VideoInfoLabel>Language:</VideoInfoLabel>
               <div>{videoDetail?.Language}</div>
@@ -107,11 +109,13 @@ function Search () {
                 <div>{videoDetail?.totalSeasons}</div>
               </div>
             )}
+            {videoDetail?.Awards && videoDetail?.Awards !== "N/A" && (
             <div>
               <VideoInfoLabel>Awards:</VideoInfoLabel>
               <div>{videoDetail?.Awards}</div>
             </div>
-            {videoDetail?.BoxOffice && (
+            )}
+            {videoDetail?.BoxOffice && videoDetail?.BoxOffice !== "N/A" && (
             <div>
               <VideoInfoLabel>BoxOffice:</VideoInfoLabel>
               <div>{videoDetail?.BoxOffice}</div>
@@ -128,7 +132,7 @@ function Search () {
           </VideoInfo>
         </VideoDetails>
       </VideoDetailsContainer>
-      <Button onClick={() => navigate(-1)}>Back to search</Button>
+      <Button onClick={() => navigate("/")}>Back to search</Button>
     </>
   )
 }
