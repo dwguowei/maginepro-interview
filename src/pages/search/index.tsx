@@ -5,7 +5,7 @@ import Label from "../../components/form/Label";
 import Input from "../../components/form/Input";
 import Button from "../../components/form/Button";
 import VideoCard, {Video} from "../../components/card/Video";
-import {omdbSearchVideos, omdbReadResponse, OmdbResponse} from "../../services/api";
+import {searchVideos, readResponse, Response} from "../../services/api/omdb-connection";
 
 const SearchBarContainer = styled.form`
   display: flex;
@@ -45,18 +45,18 @@ function Search () {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    omdbSearchVideos(title, "movie").then((result: AxiosResponse<OmdbResponse>) => {
-      const videos = omdbReadResponse(result.data);
+    searchVideos(title, "movie").then((result: AxiosResponse<Response>) => {
+      const videos = readResponse(result.data);
       setMovies(videos)
     });
 
-    omdbSearchVideos(title, "series").then((result: AxiosResponse<OmdbResponse>) => {
-      const videos = omdbReadResponse(result.data);
+    searchVideos(title, "series").then((result: AxiosResponse<Response>) => {
+      const videos = readResponse(result.data);
       setSeries(videos)
     });
 
-    omdbSearchVideos(title, "episode").then((result: AxiosResponse<OmdbResponse>) => {
-      const videos = omdbReadResponse(result.data);
+    searchVideos(title, "episode").then((result: AxiosResponse<Response>) => {
+      const videos = readResponse(result.data);
       setEpisodes(videos)
     });
   }
