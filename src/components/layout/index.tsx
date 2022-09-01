@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
 import styled from "styled-components";
-import LogoSrc from "../../assets/logo.png"
+import LogoSrc from "@/assets/logo.png"
 
 const LayoutContainer = styled.div`
   display: grid;

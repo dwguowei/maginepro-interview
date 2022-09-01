@@ -1,11 +1,11 @@
 import React from 'react';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import {ThemeProvider} from "styled-components";
-import { GlobalStyles } from "./styles/globalStyles";
-import { mainTheme } from "./styles/themes"
+import { GlobalStyles } from "@/styles/globalStyles";
+import { mainTheme } from "@/styles/themes"
 
-import Layout from "./components/layout";
-import Search from "./pages/search";
+import Layout from "@/components/layout";
+import Search from "@/pages/search";
 
 function App() {
   return (
