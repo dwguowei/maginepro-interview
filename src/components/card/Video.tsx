@@ -1,6 +1,7 @@
-import PostPlaceholder from "../../assets/movie-poster-placeholder.jpeg";
 import React from "react";
+import {Link} from "react-router-dom";
 import styled from "styled-components";
+import PostPlaceholder from "../../assets/movie-poster-placeholder.jpeg";
 
 export type Video = {
   imdbID: string,
@@ -11,6 +12,7 @@ export type Video = {
 type CardProps = {
   backgroundImage?: string
 }
+
 const Card = styled.div<CardProps>`
   width: 300px;
   height: 444px;
@@ -30,17 +32,20 @@ const Title = styled.div`
 `;
 
 function VideoCard ({imdbID, poster, title}: Video) {
-  if (poster === "N/A") {
-    return (
-      <Card backgroundImage={PostPlaceholder}>
-        <Title>{title}</Title>
-      </Card>
-    )
-  } else {
-    return (
-      <Card backgroundImage={poster} />
-    )
-  }
+  return (
+    <Link to={`detail/${imdbID}`}>
+      {poster === "N/A"
+        ? (
+          <Card backgroundImage={PostPlaceholder}>
+            <Title>{title}</Title>
+          </Card>
+        )
+        : (
+          <Card backgroundImage={poster} />
+        )
+      }
+    </Link>
+  )
 }
 
 
