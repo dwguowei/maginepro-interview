@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
+import styled from "styled-components";
 import Button from "../components/form/Button";
 import {AxiosResponse} from "axios";
 import {getVideo, GetResponse} from "../services/api/OmdbConnection";
-import styled from "styled-components";
+import {useQuery} from "react-query";
 
 const VideoDetailsContainer = styled.div`
   display: flex;
@@ -42,96 +43,97 @@ const VideoInfoLabel = styled.div`
 `;
 
 function Search () {
-  const [videoDetail, setVideoDetail] = useState<GetResponse>();
   const {imdbID} = useParams<{imdbID: string}>();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if (imdbID) {
-      getVideo(imdbID).then((result: AxiosResponse<GetResponse>) => {
-        console.log(result.data)
-        if (typeof result.data === "object") {
-          setVideoDetail(result.data)
-        }
-        // const video = omdbReadResponse(result.data);
-        // setVideoDetail(video)
-      });
-    }
-  },[imdbID]);
+  const [apiError, setApiError] = useState()
+
+  const {isLoading, error, data} = useQuery(
+    ["movieDetail", imdbID],
+    () => getVideo(imdbID).then((result: AxiosResponse<GetResponse>) => result.data, reject => setApiError(reject.message)),
+  );
 
   return (
     <>
       <VideoDetailsContainer>
-        <VideoTitle>{videoDetail?.Title}</VideoTitle>
-        <VideoYearDuration>{videoDetail?.Year} &middot; {videoDetail?.Runtime}</VideoYearDuration>
-        <VideoDetails>
-          <VideoPoster src={videoDetail?.Poster} />
-          <VideoInfo>
-            <div>
-              <VideoInfoLabel>Genre:</VideoInfoLabel>
-              <div>{videoDetail?.Genre}</div>
-            </div>
-            <div>
-              <VideoInfoLabel>Plot:</VideoInfoLabel>
-              <div>{videoDetail?.Plot}</div>
-            </div>
-            {videoDetail?.Director && videoDetail?.Director !== "N/A" && (
-            <div>
-              <VideoInfoLabel>Director:</VideoInfoLabel>
-              <div>{videoDetail?.Director}</div>
-            </div>
-            )}
-            <div>
-              <VideoInfoLabel>Writer:</VideoInfoLabel>
-              <div>{videoDetail?.Writer}</div>
-            </div>
-            <div>
-              <VideoInfoLabel>Actors:</VideoInfoLabel>
-              <div>{videoDetail?.Actors}</div>
-            </div>
-            {videoDetail?.Released && videoDetail?.Released !== "N/A" && (
-            <div>
-              <VideoInfoLabel>Released:</VideoInfoLabel>
-              <div>{videoDetail?.Released}</div>
-            </div>
-            )}
-            <div>
-              <VideoInfoLabel>Language:</VideoInfoLabel>
-              <div>{videoDetail?.Language}</div>
-            </div>
-            <div>
-              <VideoInfoLabel>Rated:</VideoInfoLabel>
-              <div>{videoDetail?.Rated}</div>
-            </div>
-            {videoDetail?.totalSeasons && (
-              <div>
-                <VideoInfoLabel>Total Seasons:</VideoInfoLabel>
-                <div>{videoDetail?.totalSeasons}</div>
-              </div>
-            )}
-            {videoDetail?.Awards && videoDetail?.Awards !== "N/A" && (
-            <div>
-              <VideoInfoLabel>Awards:</VideoInfoLabel>
-              <div>{videoDetail?.Awards}</div>
-            </div>
-            )}
-            {videoDetail?.BoxOffice && videoDetail?.BoxOffice !== "N/A" && (
-            <div>
-              <VideoInfoLabel>BoxOffice:</VideoInfoLabel>
-              <div>{videoDetail?.BoxOffice}</div>
-            </div>
-            )}
-            <div>
-              <VideoInfoLabel>Ratings:</VideoInfoLabel>
-              <div>
-                {videoDetail?.Ratings.map((rating) => {
-                  return `${rating.Source}: ${rating.Value}`
-                }).join(", ")}
-              </div>
-            </div>
-          </VideoInfo>
-        </VideoDetails>
+        {(data && data.Response === "False") || apiError
+          ? <div>Error getting video data{apiError || data?.Error && <>. {apiError || data?.Error}</>}</div>
+          : isLoading
+            ? <div>Loading video information</div>
+            : (<>
+            <VideoTitle>{data?.Title}</VideoTitle>
+            <VideoYearDuration>{data?.Year} &middot; {data?.Runtime}</VideoYearDuration>
+            <VideoDetails>
+              <VideoPoster src={data?.Poster} />
+              <VideoInfo>
+                <div>
+                  <VideoInfoLabel>Genre:</VideoInfoLabel>
+                  <div>{data?.Genre}</div>
+                </div>
+                <div>
+                  <VideoInfoLabel>Plot:</VideoInfoLabel>
+                  <div>{data?.Plot}</div>
+                </div>
+                {data?.Director && data?.Director !== "N/A" && (
+                  <div>
+                    <VideoInfoLabel>Director:</VideoInfoLabel>
+                    <div>{data?.Director}</div>
+                  </div>
+                )}
+                <div>
+                  <VideoInfoLabel>Writer:</VideoInfoLabel>
+                  <div>{data?.Writer}</div>
+                </div>
+                <div>
+                  <VideoInfoLabel>Actors:</VideoInfoLabel>
+                  <div>{data?.Actors}</div>
+                </div>
+                {data?.Released && data?.Released !== "N/A" && (
+                  <div>
+                    <VideoInfoLabel>Released:</VideoInfoLabel>
+                    <div>{data?.Released}</div>
+                  </div>
+                )}
+                <div>
+                  <VideoInfoLabel>Language:</VideoInfoLabel>
+                  <div>{data?.Language}</div>
+                </div>
+                <div>
+                  <VideoInfoLabel>Rated:</VideoInfoLabel>
+                  <div>{data?.Rated}</div>
+                </div>
+                {data?.totalSeasons && (
+                  <div>
+                    <VideoInfoLabel>Total Seasons:</VideoInfoLabel>
+                    <div>{data?.totalSeasons}</div>
+                  </div>
+                )}
+                {data?.Awards && data?.Awards !== "N/A" && (
+                  <div>
+                    <VideoInfoLabel>Awards:</VideoInfoLabel>
+                    <div>{data?.Awards}</div>
+                  </div>
+                )}
+                {data?.BoxOffice && data?.BoxOffice !== "N/A" && (
+                  <div>
+                    <VideoInfoLabel>BoxOffice:</VideoInfoLabel>
+                    <div>{data?.BoxOffice}</div>
+                  </div>
+                )}
+                <div>
+                  <VideoInfoLabel>Ratings:</VideoInfoLabel>
+                  <div>
+                    {data?.Ratings?.map((rating) => {
+                      return `${rating.Source}: ${rating.Value}`
+                    }).join(", ")}
+                  </div>
+                </div>
+              </VideoInfo>
+            </VideoDetails>
+          </>)
+        }
       </VideoDetailsContainer>
+
       <Button onClick={() => navigate("/")}>Back to search</Button>
     </>
   )

@@ -4,9 +4,9 @@ import styled from "styled-components";
 import PostPlaceholder from "../../assets/movie-poster-placeholder.jpeg";
 
 export type Video = {
-  imdbID: string,
-  title: string,
-  poster: string
+  imdbID: string;
+  title: string;
+  poster: string;
 }
 
 type CardProps = {

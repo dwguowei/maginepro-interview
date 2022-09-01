@@ -1,11 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {AxiosResponse} from "axios";
 import Label from "../components/form/Label";
 import Input from "../components/form/Input";
 import Button from "../components/form/Button";
 import VideoCard, {Video} from "../components/card/Video";
-import {searchVideos, readSearchResponse, SearchResponse} from "../services/api/OmdbConnection";
+import {searchVideos, readSearchResponse, SearchResponse, ErrorResponse} from "../services/api/OmdbConnection";
+import {useQuery} from "react-query";
 
 const SearchBarContainer = styled.form`
   display: flex;
@@ -37,23 +38,34 @@ const VideoContainer = styled.div`
 `;
 
 function Search () {
+
   const [title, setTitle] = useState("");
-  const [movies, setMovies] = useState<Video[]>([]);
+  const [movies, setMovies] = useState<Video[]>();
   const [series, setSeries] = useState<Video[]>([]);
+
+  const {
+    isLoading: isMovieLoading, isFetching: isMovieFetching, refetch: movieRefetch,
+    error: movieError, data: movieData
+  } = useQuery(
+    ["searchMovie"],
+    () => searchVideos(title, "movie").then((result: AxiosResponse<SearchResponse | ErrorResponse>) => result.data),
+    {refetchOnWindowFocus: false, enabled: false /* disable this query from automatically running */}
+  );
+
+  const {
+    isLoading: isSeriesLoading, isFetching: isSeriesFetching, refetch: seriesRefetch,
+    error: seriesError, data: seriesData
+  } = useQuery(
+    ["searchSeries"],
+    () => searchVideos(title, "series").then((result: AxiosResponse<SearchResponse | ErrorResponse>) => result.data),
+    {refetchOnWindowFocus: false, enabled: false /* disable this query from automatically running */}
+  );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    searchVideos(title, "movie").then((result: AxiosResponse<SearchResponse>) => {
-      const videos = readSearchResponse(result.data);
-      setMovies(videos)
-    });
-
-    searchVideos(title, "series").then((result: AxiosResponse<SearchResponse>) => {
-      const videos = readSearchResponse(result.data);
-      setSeries(videos)
-    });
-
+    movieRefetch();
+    seriesRefetch();
   }
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,27 +75,61 @@ function Search () {
     }
   }
 
+  useEffect(() => {
+    if (title) {
+      movieRefetch();
+      seriesRefetch();
+    }
+  },[movieRefetch, seriesRefetch])
+
+  useEffect(() => {
+
+    const videos = readSearchResponse(movieData);
+    if (typeof videos !== "string") {
+      setMovies(videos)
+    }
+  }, [movieData])
+
+  useEffect(() => {
+    const videos = readSearchResponse(seriesData);
+    if (typeof videos !== "string") {
+      setSeries(videos)
+    }
+  }, [seriesData])
+
   return (
     <>
       <SearchBarContainer onSubmit={(e) => handleSubmit(e)}>
         <Label>Search Videos:</Label>
-        <Input name="title" type="text" placeholder="Please enter a movie title" value={title} onChange={(e) => handleInputChange(e)}/>
-        <Button type="submit" disabled={!title || title.length < 3}>Search</Button>
+        <Input
+          name="title" type="text" placeholder="Please enter a movie title"
+          value={title} onChange={(e) => handleInputChange(e)}
+          disabled={isMovieFetching || isSeriesFetching}
+        />
+        <Button type="submit" disabled={!title || title.length < 3 || isMovieFetching || isSeriesFetching}>Search</Button>
       </SearchBarContainer>
       <SearchResultContainer>
         <CategoryTitle>Movies</CategoryTitle>
         <VideoContainer>
-          {movies && movies.length > 0
-            ? movies.map((video) => <VideoCard key={video.imdbID}  imdbID={video.imdbID} poster={video.poster} title={video.title} />)
-            : <div>No Movies Found</div>
+          {isMovieLoading || (movies?.length === 0 && isMovieFetching)
+            ? <div>Searching for movies</div>
+            : movies && movies.length > 0
+              ? movies.map((video) => {
+                return <VideoCard key={video.imdbID}  imdbID={video.imdbID} poster={video.poster} title={video.title} />
+              })
+              : <div>No Movies Found</div>
           }
         </VideoContainer>
 
         <CategoryTitle>Series</CategoryTitle>
         <VideoContainer>
-          {series && series.length > 0
-            ? series.map((video) => <VideoCard key={video.imdbID}  imdbID={video.imdbID} poster={video.poster} title={video.title} />)
-            : <div>No Series Found</div>
+          {isSeriesLoading || (series?.length === 0 && isSeriesFetching)
+            ? <div>Searching for series</div>
+            : series && series.length > 0
+              ? series.map((video) => {
+                return <VideoCard key={video.imdbID}  imdbID={video.imdbID} poster={video.poster} title={video.title} />
+              })
+              : <div>No Series Found</div>
           }
         </VideoContainer>
 

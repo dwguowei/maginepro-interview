@@ -8,20 +8,27 @@ import Layout from "./components/layout";
 import Detail from "./pages/Detail";
 import Search from "./pages/Search";
 import DarkThemeProvider from "./components/layout/DarkThemeProvider";
+import {QueryClient, QueryClientProvider} from "react-query";
+
 
 function App() {
+
+  const queryClient = new QueryClient();
+
   return (
     <>
       <ReduxProvider store={store}>
-        <DarkThemeProvider>
-          <GlobalStyles/>
-          <Layout>
-            <Routes>
-              <Route path="detail/:imdbID" element={<Detail />} />
-              <Route path="/" element={<Search />} />
-            </Routes>
-          </Layout>
-        </DarkThemeProvider>
+        <QueryClientProvider client={queryClient}>
+          <DarkThemeProvider>
+            <GlobalStyles/>
+            <Layout>
+              <Routes>
+                <Route path="detail/:imdbID" element={<Detail />} />
+                <Route path="/" element={<Search />} />
+              </Routes>
+            </Layout>
+          </DarkThemeProvider>
+        </QueryClientProvider>
       </ReduxProvider>
     </>
   );
