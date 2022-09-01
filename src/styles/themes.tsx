@@ -32,17 +32,10 @@ declare module 'styled-components' {
   }
 }
 
-export const mainTheme : DefaultTheme = {
-  background: "#021820",
 
-  text: {
-    main: "#ffffff",
-  },
-
+const mainTheme = {
   input: {
-    background: "#374151",
     border: "#4B5563",
-    text: "#ffffff",
     focus: {
       border: "#3F83F8"
     },
@@ -53,9 +46,53 @@ export const mainTheme : DefaultTheme = {
       background: "#EC0032",
       text: "#ffffff",
     },
+  }
+}
+
+export const darkTheme : DefaultTheme = {
+  ...mainTheme,
+
+  background: "#021820",
+
+  text: {
+    main: "#ffffff",
+  },
+
+  input: {
+    ...mainTheme.input,
+    background: "#374151",
+    text: "#ffffff",
+  },
+
+  button: {
+    ...mainTheme.button,
     disabled: {
       background: "#374151",
       text: "#9CA3AF",
+    }
+  }
+}
+
+export const lightTheme : DefaultTheme = {
+  ...mainTheme,
+
+  background: "#ffffff",
+
+  text: {
+    main: "#021820",
+  },
+
+  input: {
+    ...mainTheme.input,
+    background: "#ffffff",
+    text: "#021820",
+  },
+
+  button: {
+    ...mainTheme.button,
+    disabled: {
+      background: "#0000001f",
+      text: "#00000042",
     }
   }
 }
