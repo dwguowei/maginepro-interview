@@ -6,6 +6,7 @@ import {AxiosResponse} from "axios";
 import {getVideo, GetResponse} from "../services/api/OmdbConnection";
 import {useQuery} from "react-query";
 import {device} from "../styles/breakpoints";
+import {Helmet} from "react-helmet";
 
 const VideoDetailsContainer = styled.div`
   display: flex;
@@ -68,6 +69,20 @@ function Search () {
 
   return (
     <>
+      <Helmet>
+        <title>FilmDB - Video Details</title>
+        <meta name="description" content="Find movies at your finger tips" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FilmDB - Video Details" />
+        <meta name="twitter:description" content="Find movies at your finger tips" />
+        <meta name="twitter:image" content="https://dwguowei.github.io/maginepro-interview/logo.png"/>
+        <meta property="og:title" content="FilmDB - Video Details" />
+        <meta property="og:description" content="Find movies at your finger tips" />
+        <meta property="og:image" content="https://dwguowei.github.io/maginepro-interview/logo.png"/>
+        <meta property="og:url" content="https://dwguowei.github.io/maginepro-interview/" />
+        <meta property="og:site_name" content="FilmDB" />
+        <meta property="og:locale" content="en_US" />
+      </Helmet>
       <VideoDetailsContainer>
         {(data && data.Response === "False") || apiError
           ? <div>Error getting video data{apiError || data?.Error && <>. {apiError || data?.Error}</>}</div>

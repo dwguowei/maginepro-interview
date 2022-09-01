@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {AxiosResponse} from "axios";
+import { Helmet } from 'react-helmet';
+
 import Label from "../components/form/Label";
 import Input from "../components/form/Input";
 import Button from "../components/form/Button";
@@ -108,6 +110,20 @@ function Search () {
 
   return (
     <>
+      <Helmet>
+        <title>FilmDB - Search</title>
+        <meta name="description" content="Find movies at your finger tips" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="FilmDB - Search" />
+        <meta name="twitter:description" content="Find movies at your finger tips" />
+        <meta name="twitter:image" content="https://dwguowei.github.io/maginepro-interview/logo.png"/>
+        <meta property="og:title" content="FilmDB - Search" />
+        <meta property="og:description" content="Find movies at your finger tips" />
+        <meta property="og:image" content="https://dwguowei.github.io/maginepro-interview/logo.png"/>
+        <meta property="og:url" content="https://dwguowei.github.io/maginepro-interview/" />
+        <meta property="og:site_name" content="FilmDB" />
+        <meta property="og:locale" content="en_US" />
+      </Helmet>
       <SearchBarContainer onSubmit={(e) => handleSubmit(e)}>
         <Label whiteSpace="nowrap" >Search Videos:</Label>
         <Input
