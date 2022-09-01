@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import styled from "styled-components";
 import {AxiosResponse} from "axios";
-import Label from "@/components/form/Label";
-import Input from  "@/components/form/Input";
-import Button from "@/components/form/Button";
-import VideoCard, {Video} from "@/components/card/Video";
-import {searchVideos, readResponse, Response} from "@/services/api/omdb-connection";
+import Label from "../../components/form/Label";
+import Input from "../../components/form/Input";
+import Button from "../../components/form/Button";
+import VideoCard, {Video} from "../../components/card/Video";
+import {omdbSearchVideos, omdbReadResponse, OmdbResponse} from "../../services/api";
 
 const SearchBarContainer = styled.form`
   display: flex;
@@ -45,18 +45,18 @@ function Search () {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    searchVideos(title, "movie").then((result: AxiosResponse<Response>) => {
-      const videos = readResponse(result.data);
+    omdbSearchVideos(title, "movie").then((result: AxiosResponse<OmdbResponse>) => {
+      const videos = omdbReadResponse(result.data);
       setMovies(videos)
     });
 
-    searchVideos(title, "series").then((result: AxiosResponse<Response>) => {
-      const videos = readResponse(result.data);
+    omdbSearchVideos(title, "series").then((result: AxiosResponse<OmdbResponse>) => {
+      const videos = omdbReadResponse(result.data);
       setSeries(videos)
     });
 
-    searchVideos(title, "episode").then((result: AxiosResponse<Response>) => {
-      const videos = readResponse(result.data);
+    omdbSearchVideos(title, "episode").then((result: AxiosResponse<OmdbResponse>) => {
+      const videos = omdbReadResponse(result.data);
       setEpisodes(videos)
     });
   }

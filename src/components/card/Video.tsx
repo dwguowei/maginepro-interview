@@ -1,6 +1,6 @@
+import PostPlaceholder from "../../assets/movie-poster-placeholder.jpeg";
 import React from "react";
 import styled from "styled-components";
-import PostPlaceholder from "@/assets/movie-poster-placeholder.jpeg";
 
 export type Video = {
   imdbID: string,

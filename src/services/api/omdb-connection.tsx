@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {Video} from "@/components/card/Video";
+import {Video} from "../../components/card/Video";
 
 const instance = axios.create({
   baseURL: 'https://www.omdbapi.com/',
