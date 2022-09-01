@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/maginepro-interview/static/css/main.e6c13ad2.css",
-    "main.js": "/maginepro-interview/static/js/main.d5bb9df4.js",
+    "main.js": "/maginepro-interview/static/js/main.b976ff7f.js",
     "static/js/787.1f357637.chunk.js": "/maginepro-interview/static/js/787.1f357637.chunk.js",
     "static/media/logo.png": "/maginepro-interview/static/media/logo.7f6af36c6bfc2e34a259.png",
     "static/media/movie-poster-placeholder.jpeg": "/maginepro-interview/static/media/movie-poster-placeholder.0e45f6f65d88c089ee37.jpeg",
@@ -9,11 +9,11 @@
     "static/media/dark.png": "/maginepro-interview/static/media/dark.dc6990fdfe83f9dfd42b.png",
     "index.html": "/maginepro-interview/index.html",
     "main.e6c13ad2.css.map": "/maginepro-interview/static/css/main.e6c13ad2.css.map",
-    "main.d5bb9df4.js.map": "/maginepro-interview/static/js/main.d5bb9df4.js.map",
+    "main.b976ff7f.js.map": "/maginepro-interview/static/js/main.b976ff7f.js.map",
     "787.1f357637.chunk.js.map": "/maginepro-interview/static/js/787.1f357637.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.d5bb9df4.js"
+    "static/js/main.b976ff7f.js"
   ]
 }
