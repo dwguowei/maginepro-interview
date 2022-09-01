@@ -7,12 +7,21 @@ import Button from "../components/form/Button";
 import VideoCard, {Video} from "../components/card/Video";
 import {searchVideos, readSearchResponse, SearchResponse, ErrorResponse} from "../services/api/OmdbConnection";
 import {useQuery} from "react-query";
+import {device} from "../styles/breakpoints";
 
 const SearchBarContainer = styled.form`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 10px;
+  padding: 10px;
+
+  @media ${device.md} {
+    flex-direction: row;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
 `;
 
 const SearchResultContainer = styled.div`
@@ -100,7 +109,7 @@ function Search () {
   return (
     <>
       <SearchBarContainer onSubmit={(e) => handleSubmit(e)}>
-        <Label>Search Videos:</Label>
+        <Label whiteSpace="nowrap" >Search Videos:</Label>
         <Input
           name="title" type="text" placeholder="Please enter a movie title"
           value={title} onChange={(e) => handleInputChange(e)}

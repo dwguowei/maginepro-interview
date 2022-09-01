@@ -6,8 +6,6 @@ import {useAppSelector} from "../../redux/hooks";
 const DarkThemeProvider = ({ children }: { children: ReactNode[] | ReactNode }) => {
   const darkThemeEnabled = useAppSelector(state => state.state.enableDarkTheme);
 
-  console.log("darkThemeEnabled",darkThemeEnabled)
-
   return (
     <ThemeProvider theme={darkThemeEnabled ? darkTheme : lightTheme }>
       {children}

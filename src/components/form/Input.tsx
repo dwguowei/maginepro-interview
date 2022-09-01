@@ -10,10 +10,10 @@ const InputStyle = styled.input`
   border-width: 1px;
   padding: 10px;
   width: 100%;
-  max-width: 500px;
   outline: none;
   color: ${({ theme }) => theme.input.text};
   caret-color: ${({ theme }) => theme.input.text};
+  box-sizing: border-box;
   :focus {
     border-color: ${({ theme }) => theme.input.focus.border};
     border-width: 2px;

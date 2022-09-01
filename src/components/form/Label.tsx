@@ -1,13 +1,17 @@
 import {ReactNode} from "react";
 import styled from "styled-components";
 
-const LabelStyle = styled.label`
-    font-weight: 700;
+interface Props {
+  whiteSpace: "normal" | "nowrap" | "pre" | "pre-wrap" | "pre-line" | "break-spaces"
+}
+const LabelStyle = styled.label<Props>`
+  font-weight: 700;
+  white-space: ${props => props.whiteSpace};
 `;
 
-function Label ({children}: {children: string | ReactNode[] | ReactNode}) {
+function Label ({whiteSpace = "normal", children}: {whiteSpace?: "normal" | "nowrap" | "pre" | "pre-wrap" | "pre-line" | "break-spaces", children: string | ReactNode[] | ReactNode}) {
   return (
-    <LabelStyle>{children}</LabelStyle>
+    <LabelStyle whiteSpace={whiteSpace} >{children}</LabelStyle>
   )
 }
 

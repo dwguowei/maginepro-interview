@@ -5,12 +5,13 @@ import Button from "../components/form/Button";
 import {AxiosResponse} from "axios";
 import {getVideo, GetResponse} from "../services/api/OmdbConnection";
 import {useQuery} from "react-query";
+import {device} from "../styles/breakpoints";
 
 const VideoDetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 20px;
+  margin: 10px;
 `;
 
 const VideoTitle = styled.div`
@@ -24,12 +25,20 @@ const VideoYearDuration = styled.div`
 
 const VideoDetails = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 10px;
+
+  @media ${device.md} {
+     flex-direction: row;
+   }
 `;
 
 const VideoPoster = styled.img`
   object-fit: contain;
-  height: 600px;
+  width: 100%;
+  @media ${device.md} {
+    height: 600px;
+  }
 `;
 
 const VideoInfo = styled.div`
@@ -40,6 +49,10 @@ const VideoInfo = styled.div`
 
 const VideoInfoLabel = styled.div`
   font-weight: 700;
+`;
+
+const BackButtonContainer = styled.div`
+  margin: 10px;
 `;
 
 function Search () {
@@ -134,7 +147,9 @@ function Search () {
         }
       </VideoDetailsContainer>
 
-      <Button onClick={() => navigate("/")}>Back to search</Button>
+      <BackButtonContainer>
+        <Button onClick={() => navigate("/")}>Back to search</Button>
+      </BackButtonContainer>
     </>
   )
 }

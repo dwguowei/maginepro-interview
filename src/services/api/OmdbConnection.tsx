@@ -46,7 +46,6 @@ export const getVideo = (imdbID?: string): Promise<AxiosResponse<GetResponse>> =
 }
 
 export const readSearchResponse = (response?: SearchResponse | ErrorResponse): Video[] | string => {
-  console.log("response",response)
   if (response && response.Response === "True") {
     const data = response.Search.map(video => {return {imdbID: video.imdbID, title: video.Title, poster: video.Poster}});
     return data;
